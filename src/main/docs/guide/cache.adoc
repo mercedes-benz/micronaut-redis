@@ -30,7 +30,7 @@ include::{includedir}configurationProperties/io.micronaut.configuration.lettuce.
 
 == Dynamic Caching
 
-To get more flexibilty to about Caches, you can enable dynamic caching. Therefore no specific cache configuration is needed and the caches will be created dynamically at runtime.
+To get more flexibility for Caches, you can enable dynamic caching. Therefore no specific cache configuration is needed and the caches will be created dynamically at runtime.
 The DefaultRedisCacheConfiguration will be used to setup the cache. "Static"- and "Dynamic"-caches can be used in parallel.
 
 .DynamicCache Configuration Example

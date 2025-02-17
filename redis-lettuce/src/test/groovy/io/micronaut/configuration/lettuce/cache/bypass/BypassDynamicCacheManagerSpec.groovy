@@ -7,7 +7,8 @@ import io.micronaut.context.exceptions.NoSuchBeanException
 
 /**
  * @author Ferdinand Armbruster
- * @since 1.0
+ *
+ * @since 6.7.1
  */
 class BypassDynamicCacheManagerSpec extends RedisSpec {
 
