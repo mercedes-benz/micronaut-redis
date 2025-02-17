@@ -51,10 +51,11 @@ import java.util.stream.Collectors;
 /**
  * An implementation of {@link SyncCache} for Lettuce / Redis using connection pooling.
  *
- * @author Graeme Rocher, Kovalov Illia
+ * @author Graeme Rocher, Kovalov Illia, Ferdinand Armbruster
  * @since 5.3.0
  */
 @EachBean(RedisCacheConfiguration.class)
+@Requires(classes = SyncCache.class, property = RedisSetting.PREFIX + ".enabled", defaultValue = StringUtils.TRUE, notEquals = StringUtils.FALSE)
 @Requires(classes = SyncCache.class, property = RedisSetting.REDIS_POOL + ".enabled", defaultValue = StringUtils.FALSE, notEquals = StringUtils.FALSE)
 public class RedisConnectionPoolCache extends AbstractRedisCache<AsyncPool<StatefulConnection<byte[], byte[]>>> {
     private static final Logger LOG = LoggerFactory.getLogger(RedisConnectionPoolCache.class);

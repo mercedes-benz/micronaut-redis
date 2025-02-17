@@ -17,7 +17,7 @@ import io.micronaut.runtime.ApplicationConfiguration
 import java.nio.charset.Charset
 
 /**
- * @author Kovalov Illia
+ * @author Kovalov Illia, Ferdinand Armbruster
  */
 class RedisPoolCacheSpec extends RedisSpec {
 
@@ -27,6 +27,20 @@ class RedisPoolCacheSpec extends RedisSpec {
                 'redis.caches.test.enabled': 'true',
                 'redis.pool.enabled': 'true'
         ] + options).environments("test").eagerInitSingletons(eagerInit).start()
+    }
+
+    void "test bean is not instantiated if redis is disabled"(){
+        setup:
+        ApplicationContext applicationContext = createApplicationContext('redis.enabled': 'false')
+
+        when:
+        applicationContext.getBean(RedisCache, Qualifiers.byName("test"))
+
+        then:
+        thrown(NoSuchBeanException)
+
+        cleanup:
+        applicationContext.stop()
     }
 
     void "can be disabled where initialization is #description"() {

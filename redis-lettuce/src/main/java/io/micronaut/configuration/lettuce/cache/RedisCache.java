@@ -46,10 +46,11 @@ import java.util.stream.Collectors;
 /**
  * An implementation of {@link SyncCache} for Lettuce / Redis.
  *
- * @author Graeme Rocher
+ * @author Graeme Rocher, Ferdinand Armbruster
  * @since 1.0
  */
 @EachBean(RedisCacheConfiguration.class)
+@Requires(classes = SyncCache.class, property = RedisSetting.PREFIX + ".enabled", defaultValue = StringUtils.TRUE, notEquals = StringUtils.FALSE)
 @Requires(classes = SyncCache.class, property = RedisSetting.REDIS_POOL + ".enabled", defaultValue = StringUtils.FALSE, notEquals = StringUtils.TRUE)
 public class RedisCache extends AbstractRedisCache<StatefulConnection<byte[], byte[]>> {
     private final RedisAsyncCache asyncCache;

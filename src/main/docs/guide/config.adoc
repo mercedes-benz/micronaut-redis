@@ -80,7 +80,7 @@ include::{testsredis}/NamedCodecFactory.groovy[tags=namedCodec2, indent=0]
 
 When the `redis-lettuce` module is activated a api:configuration.lettuce.health.RedisHealthIndicator[] is activated resulting in the `/health` endpoint and https://docs.micronaut.io/latest/api/io/micronaut/health/CurrentHealthStatus.html[CurrentHealthStatus] interface resolving the health of the Redis connection or connections.
 
-The health indicator is enabled by default. To disable the health endpoint, you can do so via the config. 
+The health indicator is enabled by default. To disable the health endpoint, you can do so via the config.
 [configuration]
 ----
 redis:
@@ -100,3 +100,6 @@ You can disable the creation of Redis connections using the `redis.enabled` sett
 redis:
     enabled: false
 ----
+
+If redis is disabled, the caching functionality will also be disabled and bypassed.
+

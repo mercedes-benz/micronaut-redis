@@ -8,6 +8,7 @@ import io.micronaut.configuration.lettuce.RedisSpec
 import io.micronaut.context.ApplicationContext
 import io.micronaut.context.BeanLocator
 import io.micronaut.context.exceptions.ConfigurationException
+import io.micronaut.context.exceptions.NoSuchBeanException
 import io.micronaut.core.convert.ConversionService
 import io.micronaut.core.type.Argument
 import io.micronaut.inject.qualifiers.Qualifiers
@@ -21,17 +22,31 @@ import java.nio.charset.Charset
 import java.util.concurrent.ExecutionException
 
 /**
- * @author Graeme Rocher
+ * @author Graeme Rocher, Ferdinand Armbruster
  * @since 1.0
  */
 class RedisCacheSpec extends RedisSpec {
 
-    ApplicationContext createApplicationContext() {
-        ApplicationContext.run(
+    ApplicationContext createApplicationContext(Map options = [:]) {
+        ApplicationContext.run([
                 'redis.port': RedisContainerUtils.getRedisPort(),
                 'redis.caches.test.enabled': 'true',
                 'redis.caches.test.invalidate-scan-count': 2
-        )
+        ] + options)
+    }
+
+    void "test bean is not instantiated if redis is disabled"(){
+        setup:
+        ApplicationContext applicationContext = createApplicationContext(['redis.enabled': false])
+
+        when:
+        applicationContext.getBean(RedisCache, Qualifiers.byName("test"))
+
+        then:
+        thrown(NoSuchBeanException)
+
+        cleanup:
+        applicationContext.stop()
     }
 
     void "test read/write object from redis sync cache"() {
