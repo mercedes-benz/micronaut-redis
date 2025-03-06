@@ -46,6 +46,12 @@ public interface RedisSetting {
      * Default configuration for Redis caches.
      */
     String REDIS_CACHE = PREFIX + ".cache";
+
+    /**
+     * Configuration for dynamic Redis caches.
+     */
+    String REDIS_DYNAMIC_CACHE = REDIS_CACHE + ".dynamic";
+
     /**
      * Configured Redis caches.
      */

@@ -27,3 +27,20 @@ redis:
 - Expiration is based on result from an implementation of api:configuration.lettuce.cache.expiration.ExpirationAfterWritePolicy[]
 
 include::{includedir}configurationProperties/io.micronaut.configuration.lettuce.cache.RedisCacheConfiguration.adoc[]
+
+== Dynamic Caching
+
+To get more flexibility for Caches, you can enable dynamic caching. Therefore no specific cache configuration is needed and the caches will be created dynamically at runtime.
+The DefaultRedisCacheConfiguration will be used to setup the cache. "Static"- and "Dynamic"-caches can be used in parallel.
+
+.DynamicCache Configuration Example
+[configuration]
+----
+redis:
+    uri: redis://localhost
+    cache:
+        dynamic:
+            enabled: true
+        expire-after-write: 1h
+        expiration-after-write-policy: <class path of class implementing ExpirationAfterWritePolicy>
+----
